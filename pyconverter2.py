@@ -1,6 +1,6 @@
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, QThread
 from PyQt5.QtWidgets import QAbstractItemView, QLabel, QListWidget, QLineEdit, QDialog, QPushButton, QHBoxLayout, QVBoxLayout, QApplication
-import youtube_dl
+import yt_dlp
 import os
 import shutil
 import ffmpeg
@@ -125,7 +125,7 @@ class searcher(QThread):
 
             ydl_opts = {'format': 'bestaudio/best'}
 
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
                 info_dict = ydl.extract_info(target_url, download=False)
 
                 if 'entries' in info_dict:
@@ -190,7 +190,7 @@ class downloader(QThread):
                     }],
                 }
 
-                with youtube_dl.YoutubeDL(ydl_opt_audio) as ydl:
+                with yt_dlp.YoutubeDL(ydl_opt_audio) as ydl:
                     ydl.download([url])
 
                 ydl_opt_video = {
@@ -198,7 +198,7 @@ class downloader(QThread):
                     'format': 'bestvideo/best',
                 }
 
-                with youtube_dl.YoutubeDL(ydl_opt_video) as ydl:
+                with yt_dlp.YoutubeDL(ydl_opt_video) as ydl:
                     ydl.download([url])
                 
                 if len(glob.glob("./*.webm")) > 0:
